@@ -1,0 +1,64 @@
+{
+  "targets": {
+    "swap": {},
+    "ess_esp_field": {}
+  },
+  "passes": [
+    {
+      "vertex_shader": "ess-best:post/esp_texel",
+      "fragment_shader": "ess-best:post/esp_mask",
+      "inputs": [{ "sampler_name": "In", "target": "minecraft:entity_outline" }],
+      "output": "ess_esp_field"
+    },
+    {
+      "vertex_shader": "ess-best:post/esp_blur",
+      "fragment_shader": "ess-best:post/esp_blur",
+      "inputs": [{ "sampler_name": "In", "target": "ess_esp_field", "bilinear": true }],
+      "output": "swap",
+      "uniforms": {
+        "EssBlur": [{ "name": "BlurDir", "type": "vec2", "value": [1.0, 0.0] }],
+        "EssEsp": [
+          { "name": "Look", "type": "vec4", "value": [2.4, 1.15, 0.35, 1.0] },
+          { "name": "Shape", "type": "vec4", "value": [14.0, 0.0, 0.0, 0.0] }
+        ]
+      }
+    },
+    {
+      "vertex_shader": "ess-best:post/esp_blur",
+      "fragment_shader": "ess-best:post/esp_blur",
+      "inputs": [{ "sampler_name": "In", "target": "swap", "bilinear": true }],
+      "output": "ess_esp_field",
+      "uniforms": {
+        "EssBlur": [{ "name": "BlurDir", "type": "vec2", "value": [0.0, 1.0] }],
+        "EssEsp": [
+          { "name": "Look", "type": "vec4", "value": [2.4, 1.15, 0.35, 1.0] },
+          { "name": "Shape", "type": "vec4", "value": [14.0, 0.0, 0.0, 0.0] }
+        ]
+      }
+    },
+    {
+      "vertex_shader": "ess-best:post/esp_texel",
+      "fragment_shader": "ess-best:post/esp_glow",
+      "inputs": [
+        { "sampler_name": "In", "target": "minecraft:entity_outline" },
+        { "sampler_name": "Glow", "target": "ess_esp_field", "bilinear": true }
+      ],
+      "output": "swap",
+      "uniforms": {
+        "EssEsp": [
+          { "name": "Look", "type": "vec4", "value": [2.4, 1.15, 0.35, 1.0] },
+          { "name": "Shape", "type": "vec4", "value": [14.0, 0.0, 0.0, 0.0] }
+        ]
+      }
+    },
+    {
+      "vertex_shader": "minecraft:core/screenquad",
+      "fragment_shader": "minecraft:post/blit",
+      "inputs": [{ "sampler_name": "In", "target": "swap" }],
+      "output": "minecraft:entity_outline",
+      "uniforms": {
+        "BlitConfig": [{ "name": "ColorModulate", "type": "vec4", "value": [1.0, 1.0, 1.0, 1.0] }]
+      }
+    }
+  ]
+}

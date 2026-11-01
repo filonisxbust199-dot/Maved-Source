@@ -1,0 +1,13 @@
+{
+  "ui.open": { "sounds": [ { "name": "ess-best:synth/open" } ] },
+  "ui.close": { "sounds": [ { "name": "ess-best:synth/close" } ] },
+  "ui.hover": { "sounds": [ { "name": "ess-best:synth/hover" } ] },
+  "ui.toggle_on": { "sounds": [ { "name": "ess-best:synth/toggle_on" } ] },
+  "ui.toggle_off": { "sounds": [ { "name": "ess-best:synth/toggle_off" } ] },
+  "ui.expand": { "sounds": [ { "name": "ess-best:synth/expand" } ] },
+  "ui.collapse": { "sounds": [ { "name": "ess-best:synth/collapse" } ] },
+  "ui.select": { "sounds": [ { "name": "ess-best:synth/select" } ] },
+  "ui.slider": { "sounds": [ { "name": "ess-best:synth/slider" } ] },
+  "ui.bind_listen": { "sounds": [ { "name": "ess-best:synth/bind_listen" } ] },
+  "ui.bind_set": { "sounds": [ { "name": "ess-best:synth/bind_set" } ] }
+}

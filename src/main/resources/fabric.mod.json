@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "ess-best",
+  "version": "${version}",
+  "name": "Maved",
+  "description": "Maved client",
+  "authors": [],
+  "contact": {},
+  "license": "CC0-1.0",
+  "icon": "assets/ess-best/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ess.ll.EssBest"
+    ],
+    "client": [
+      "ess.ll.client.EssBestClient"
+    ]
+  },
+  "mixins": [
+    "ess-best.mixins.json",
+    {
+      "config": "ess-best.client.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "ess-best.combat.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.20.1",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "accessWidener": "ess-best.accesswidener"
+}

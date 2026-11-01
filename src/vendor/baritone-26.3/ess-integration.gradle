@@ -1,0 +1,35 @@
+// Build the supplied 26.3 sources as a separately identifiable nested Fabric mod.
+apply plugin: 'net.fabricmc.fabric-loom'
+version = '1.20.0-ess'
+group = 'baritone'
+base { archivesName = 'baritone-fabric' }
+repositories {
+    mavenCentral()
+    maven { url = 'https://babbaj.github.io/maven/' }
+}
+dependencies {
+    minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    include implementation('dev.babbaj:nether-pathfinder:1.6')
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    testImplementation 'junit:junit:4.13.2'
+}
+sourceSets.main {
+    java.srcDirs = ['src/main/java', 'src/api/java', 'src/launch/java', 'src/schematica_api/java']
+    resources.srcDirs = ['src/main/resources', 'src/launch/resources', 'fabric/src/main/resources']
+}
+tasks.withType(JavaCompile).configureEach { options.release = 25; options.encoding = 'UTF-8' }
+processResources {
+    def modVersion = project.version.toString()
+    inputs.property 'version', modVersion
+    filesMatching('fabric.mod.json') { expand version: modVersion }
+}
+jar {
+    exclude 'com/github/lunatrius/**'
+    from('LICENSE') { rename { 'LICENSE-baritone' } }
+}
+java { withSourcesJar() }
+// Baritone ships inside the client and never runs on its own: without this, "runClient" in the root project also
+// starts a second game with only Baritone, alongside the client's.
+loom.runConfigs.configureEach { ideConfigGenerated = false }
+tasks.matching { it.name.startsWith('runClient') || it.name.startsWith('runServer') }.configureEach { enabled = false }

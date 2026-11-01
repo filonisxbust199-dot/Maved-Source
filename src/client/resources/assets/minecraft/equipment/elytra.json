@@ -1,0 +1,10 @@
+{
+  "layers": {
+    "wings": [
+      {
+        "texture": "ess-best:elytra",
+        "use_player_texture": false
+      }
+    ]
+  }
+}

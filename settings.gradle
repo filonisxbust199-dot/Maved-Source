@@ -1,0 +1,16 @@
+pluginManagement {
+	repositories {
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		mavenCentral()
+		gradlePluginPortal()
+	}
+}
+
+// Should match your modid
+rootProject.name = 'ess-best'
+include 'baritone'
+project(':baritone').projectDir = file('src/vendor/baritone-26.3')
+project(':baritone').buildFileName = 'ess-integration.gradle'
